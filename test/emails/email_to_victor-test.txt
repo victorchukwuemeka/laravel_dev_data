@@ -1,0 +1,11 @@
+
+To: anyemail@example.com
+Hi victor-test,
+
+Just reaching out to share Laraub — a platform for Laravel developers
+to discover and share useful packages.
+
+No pressure at all.
+Have a great day!
+
+— Victor
