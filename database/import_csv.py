@@ -11,7 +11,7 @@ ON DUPLICATE KEY UPDATE email = VALUES(email);
 """
 
 with conn.cursor() as cursor:
-    with open("../laravel_devs.csv", newline="", encoding="utf-8") as csvfile:
+    with open("laravel_devs.csv", newline="", encoding="utf-8") as csvfile:
         reader = csv.DictReader(csvfile)
 
         for row in reader:

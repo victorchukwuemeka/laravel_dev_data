@@ -11,7 +11,7 @@ HEADERS = {
     "Accept": "application/vnd.github+json"
 }
 
-# Session with automatic retries
+
 session = requests.Session()
 retry = Retry(total=3, backoff_factor=1, status_forcelist=[500, 502, 503, 504])
 adapter = HTTPAdapter(max_retries=retry)
@@ -30,7 +30,7 @@ def get_repos(page):
         r.raise_for_status()
         return r.json()["items"]
     except requests.exceptions.RequestException as e:
-        print(f"❌ Error fetching repos page {page}: {e}")
+        print(f" Error fetching repos page {page}: {e}")
         return []
 
 def get_user(username):
@@ -73,18 +73,18 @@ def process_repo(repo):
     owner = repo["owner"]["login"]
     return get_user(owner)
 
-# Main execution
-print("🚀 Starting to fetch repos...")
+
+print("Starting to fetch repos...")
 
 all_repos = []
 for page in range(1, 11):
-    print(f"📄 Fetching page {page}/10...")
+    print(f"Fetching page {page}/10...")
     repos = get_repos(page)
     all_repos.extend(repos)
     time.sleep(0.5)  # Small delay between repo searches
 
-print(f"✅ Found {len(all_repos)} repos")
-print(f"👤 Fetching user details (using {min(10, len(all_repos))} threads)...")
+print(f" Found {len(all_repos)} repos")
+print(f" Fetching user details (using {min(10, len(all_repos))} threads)...")
 
 # Parallel user fetching
 with ThreadPoolExecutor(max_workers=10) as executor:
@@ -95,14 +95,14 @@ with ThreadPoolExecutor(max_workers=10) as executor:
         if user_data:
             users.append(user_data)
         
-        # Progress indicator
+        #
         if i % 10 == 0:
             print(f"✓ Processed {i}/{len(all_repos)} repos ({len(users)} unique users)")
 
-print(f"\n✅ Collected {len(users)} unique users")
-print("💾 Saving to CSV...")
+print(f"\n Collected {len(users)} unique users")
+print(" Saving to CSV...")
 
 df = pd.DataFrame(users)
 df.to_csv("laravel_devs.csv", index=False)
 
-print(f"✅ Done! Saved {len(df)} users to laravel_devs.csv")
+print(f" Done! Saved {len(df)} users to laravel_devs.csv")

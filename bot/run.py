@@ -1,15 +1,18 @@
+import sys
+print(sys.path)
 import mysql.connector
 from database.config import DB_CONFIG
 from bot.mailer import send_email
 import time
 
+BATCH_SIZE = 10
 conn = mysql.connector.connect(**DB_CONFIG)
 
 select_sql = """
 SELECT id, github_username, email
 FROM laravel_devs
 WHERE sent = 0 AND email IS NOT NULL
-LIMIT 10;
+LIMIT {BATCH_SIZE};
 """
 
 update_sql = """
