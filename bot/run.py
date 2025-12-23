@@ -8,7 +8,7 @@ import time
 BATCH_SIZE = 10
 conn = mysql.connector.connect(**DB_CONFIG)
 
-select_sql = """
+select_sql = f"""
 SELECT id, github_username, email
 FROM laravel_devs
 WHERE sent = 0 AND email IS NOT NULL
